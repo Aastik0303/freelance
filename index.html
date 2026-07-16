@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prisma Embedded Codes | Freelance Portal</title>
+  <style>
+    :root {
+      --ink: #071026;
+      --muted: #63718e;
+      --line: #dfe5f2;
+      --panel: rgba(255, 255, 255, 0.82);
+      --purple: #5537ff;
+      --violet: #9a35ff;
+      --cyan: #00a8ff;
+      --teal: #10d8c4;
+      --pink: #ff2f91;
+      --green: #00b483;
+      --gold: #ffb020;
+      --dark: #15183a;
+      --shadow: 0 24px 60px rgba(65, 62, 165, 0.18);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 72% 8%, rgba(0, 168, 255, 0.13), transparent 32rem),
+        radial-gradient(circle at 18% 35%, rgba(154, 53, 255, 0.12), transparent 31rem),
+        linear-gradient(180deg, #f7f8ff 0%, #fff 42%, #f5f9ff 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-shell {
+      min-height: 100vh;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px clamp(18px, 7vw, 112px);
+      border-bottom: 1px solid rgba(210, 218, 235, 0.72);
+      background: rgba(248, 249, 255, 0.83);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-weight: 900;
+      letter-spacing: 0;
+      color: var(--purple);
+      font-size: clamp(1rem, 2.3vw, 1.45rem);
+      white-space: nowrap;
+    }
+
+    .logo-tile {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 8px;
+      background: #050713;
+      box-shadow: 0 12px 26px rgba(55, 45, 140, 0.2);
+      overflow: hidden;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2.5vw, 32px);
+      color: #3a4864;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 10px 0;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 2px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 180ms ease;
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-cta,
+    .primary-btn,
+    .secondary-btn,
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border-radius: 8px;
+      font-weight: 900;
+      border: 1px solid transparent;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .nav-cta,
+    .primary-btn {
+      padding: 0 24px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple), #6d39ff 55%, var(--violet));
+      box-shadow: 0 16px 32px rgba(85, 55, 255, 0.25);
+    }
+
+    .nav-cta:hover,
+    .primary-btn:hover,
+    .secondary-btn:hover,
+    .ghost-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .page-section {
+      position: relative;
+      padding: clamp(56px, 8vw, 104px) clamp(18px, 7vw, 112px);
+    }
+
+    .hero {
+      min-height: calc(100vh - 82px);
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+      align-items: center;
+      gap: clamp(32px, 5vw, 76px);
+      overflow: hidden;
+    }
+
+    .hero-copy {
+      max-width: 690px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      padding: 8px 12px;
+      border: 1px solid rgba(85, 55, 255, 0.14);
+      border-radius: 8px;
+      color: var(--purple);
+      background: rgba(255, 255, 255, 0.74);
+      font-size: 0.88rem;
+      font-weight: 900;
+      box-shadow: 0 10px 28px rgba(65, 62, 165, 0.08);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(0, 180, 131, 0.12);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 22px;
+      max-width: 780px;
+      font-size: clamp(3.1rem, 7vw, 6.65rem);
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+
+    .gradient-text {
+      color: var(--purple);
+      background: linear-gradient(95deg, var(--purple), var(--cyan) 50%, var(--teal));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .lead {
+      max-width: 640px;
+      margin-bottom: 30px;
+      color: #5a6b8d;
+      font-size: clamp(1rem, 1.55vw, 1.24rem);
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 34px;
+    }
+
+    .secondary-btn,
+    .ghost-btn {
+      min-width: 160px;
+      padding: 0 20px;
+      color: var(--purple);
+      background: rgba(255, 255, 255, 0.82);
+      border-color: #cdd6ea;
+      box-shadow: 0 12px 28px rgba(70, 82, 123, 0.09);
+    }
+
+    .ghost-btn {
+      color: #0b7694;
+      background: rgba(224, 249, 255, 0.84);
+      border-color: rgba(0, 168, 255, 0.24);
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 640px;
+    }
+
+    .trust-item {
+      min-height: 96px;
+      padding: 16px;
+      border: 1px solid rgba(205, 214, 234, 0.8);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.68);
+      box-shadow: 0 14px 36px rgba(65, 62, 165, 0.08);
+    }
+
+    .trust-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+      font-size: 1.05rem;
+    }
+
+    .trust-item span {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.92rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 530px;
+      display: grid;
+      place-items: center;
+    }
+
+    .code-window {
+      position: relative;
+      width: min(100%, 700px);
+      min-height: 462px;
+      border: 1px solid rgba(204, 214, 236, 0.9);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .window-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 58px;
+      padding: 0 22px;
+      border-bottom: 1px solid rgba(216, 224, 240, 0.86);
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+
+    .red { background: #ff675c; }
+    .yellow { background: var(--gold); }
+    .green { background: #2ac94f; }
+
+    .file-name {
+      margin-left: 12px;
+      color: #8795b4;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .code-body {
+      position: relative;
+      min-height: 404px;
+      padding: 30px 26px;
+      overflow: hidden;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: clamp(0.82rem, 1vw, 1rem);
+      line-height: 2.1;
+      color: #12203a;
+    }
+
+    .code-body::before {
+      content: "";
+      position: absolute;
+      width: 430px;
+      height: 430px;
+      right: -150px;
+      bottom: -180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(85, 55, 255, 0.16), transparent 66%);
+    }
+
+    .code-comment {
+      color: #7e8fb2;
+    }
+
+    .code-keyword {
+      color: var(--purple);
+      font-weight: 900;
+    }
+
+    .code-string {
+      color: #008f9c;
+      font-weight: 900;
+    }
+
+    .floating-card {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 210px;
+      padding: 16px 18px;
+      border: 1px solid rgba(214, 222, 240, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.93);
+      box-shadow: 0 18px 40px rgba(47, 58, 104, 0.14);
+    }
+
+    .floating-card.one {
+      right: 0;
+      top: 84px;
+    }
+
+    .floating-card.two {
+      left: 0;
+      bottom: 76px;
+    }
+
+    .mini-icon {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple), var(--violet));
+      flex: 0 0 auto;
+    }
+
+    .mini-icon.cyan {
+      background: linear-gradient(135deg, var(--cyan), var(--teal));
+    }
+
+    .floating-card strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .floating-card span {
+      color: #8795b4;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .section-head h2 {
+      margin-bottom: 12px;
+      font-size: clamp(2.25rem, 4.4vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.65;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .work-card,
+    .plan-card,
+    .service-card,
+    .founder-card {
+      position: relative;
+      border: 1px solid rgba(205, 214, 234, 0.84);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: 0 18px 42px rgba(65, 62, 165, 0.1);
+      overflow: hidden;
+    }
+
+    .work-card {
+      min-height: 250px;
+      padding: 26px;
+    }
+
+    .work-card:nth-child(1) {
+      background: linear-gradient(145deg, rgba(244, 241, 255, 0.92), rgba(255, 255, 255, 0.75));
+      border-top: 4px solid #8b6cff;
+    }
+
+    .work-card:nth-child(2) {
+      background: linear-gradient(145deg, rgba(225, 250, 255, 0.92), rgba(255, 255, 255, 0.76));
+      border-top: 4px solid var(--cyan);
+    }
+
+    .work-card:nth-child(3) {
+      background: linear-gradient(145deg, rgba(226, 255, 244, 0.92), rgba(255, 255, 255, 0.75));
+      border-top: 4px solid var(--green);
+    }
+
+    .work-card:nth-child(4) {
+      background: linear-gradient(145deg, rgba(255, 235, 248, 0.92), rgba(255, 255, 255, 0.76));
+      border-top: 4px solid var(--pink);
+    }
+
+    .icon-box {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      margin-bottom: 24px;
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple), var(--violet));
+      box-shadow: 0 18px 32px rgba(85, 55, 255, 0.18);
+    }
+
+    .work-card:nth-child(2) .icon-box { background: linear-gradient(135deg, var(--cyan), #0077ff); }
+    .work-card:nth-child(3) .icon-box { background: linear-gradient(135deg, var(--green), var(--teal)); }
+    .work-card:nth-child(4) .icon-box { background: linear-gradient(135deg, var(--pink), var(--violet)); }
+
+    .work-card h3,
+    .service-card h3 {
+      margin-bottom: 12px;
+      font-size: 1.35rem;
+    }
+
+    .work-card p,
+    .service-card p,
+    .plan-card p {
+      color: #4f5f7c;
+      line-height: 1.62;
+    }
+
+    .plans-section {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(238, 247, 255, 0.68)),
+        radial-gradient(circle at 88% 16%, rgba(16, 216, 196, 0.18), transparent 28rem);
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .plan-card {
+      min-height: 300px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      isolation: isolate;
+    }
+
+    .plan-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan), var(--teal));
+    }
+
+    .plan-card.featured {
+      border-color: rgba(85, 55, 255, 0.45);
+      background: linear-gradient(145deg, rgba(244, 241, 255, 0.95), rgba(224, 249, 255, 0.8));
+      box-shadow: 0 26px 70px rgba(85, 55, 255, 0.18);
+    }
+
+    .price {
+      display: flex;
+      align-items: end;
+      gap: 8px;
+      margin: 10px 0 16px;
+      color: var(--purple);
+      font-size: 2.35rem;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .price span {
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .plan-card h3 {
+      margin-bottom: 6px;
+      font-size: 1.36rem;
+    }
+
+    .plan-list {
+      display: grid;
+      gap: 10px;
+      margin: auto 0 0;
+      padding: 0;
+      list-style: none;
+      color: #4d5c79;
+      line-height: 1.5;
+      font-weight: 650;
+    }
+
+    .plan-list li {
+      display: grid;
+      grid-template-columns: 21px 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .check {
+      display: grid;
+      place-items: center;
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--green);
+      font-size: 0.78rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .services-band {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .service-intro {
+      padding: 30px;
+      border-radius: var(--radius);
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(7, 16, 38, 0.96), rgba(21, 24, 58, 0.94)),
+        radial-gradient(circle at 20% 20%, rgba(255, 47, 145, 0.35), transparent 18rem);
+      box-shadow: 0 26px 70px rgba(21, 24, 58, 0.22);
+    }
+
+    .service-intro h3 {
+      margin-bottom: 12px;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.05;
+    }
+
+    .service-intro p {
+      color: #c5d0ed;
+      line-height: 1.7;
+    }
+
+    .service-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .service-card {
+      min-height: 180px;
+      padding: 24px;
+    }
+
+    .contact-section {
+      color: #fff;
+      background:
+        radial-gradient(circle at 8% 18%, rgba(85, 55, 255, 0.25), transparent 25rem),
+        radial-gradient(circle at 91% 74%, rgba(255, 47, 145, 0.17), transparent 23rem),
+        linear-gradient(135deg, #111431 0%, #17194a 56%, #10142f 100%);
+    }
+
+    .contact-section .section-head h2 {
+      color: #fff;
+    }
+
+    .contact-section .section-head p {
+      color: #aeb9d6;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.82fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .founders-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .founder-card {
+      min-height: 172px;
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 18px;
+      align-items: center;
+      padding: 24px;
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: none;
+    }
+
+    .founder-card h3 {
+      margin-bottom: 5px;
+      color: #fff;
+      font-size: 1.2rem;
+    }
+
+    .role {
+      margin-bottom: 14px;
+      color: #aebdff;
+      font-weight: 850;
+    }
+
+    .phone-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #c9d4ef;
+      font-weight: 750;
+    }
+
+    .contact-panel {
+      padding: 30px;
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-panel h3 {
+      margin-bottom: 12px;
+      font-size: 1.8rem;
+    }
+
+    .contact-panel p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .contact-actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .contact-actions .primary-btn,
+    .contact-actions .secondary-btn,
+    .contact-actions .ghost-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .contact-actions .secondary-btn {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px clamp(18px, 7vw, 112px);
+      color: #aeb9d6;
+      background: #0c1027;
+      font-weight: 700;
+    }
+
+    .footer-link {
+      color: #fff;
+    }
+
+    svg {
+      display: block;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .contact-layout,
+      .services-band {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 470px;
+      }
+
+      .work-grid,
+      .plans-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .navbar {
+        position: relative;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .brand {
+        white-space: normal;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 0.92rem;
+      }
+
+      .nav-cta {
+        width: 100%;
+      }
+
+      .page-section {
+        padding-inline: 18px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 44px;
+      }
+
+      h1 {
+        font-size: clamp(2.7rem, 18vw, 4.25rem);
+      }
+
+      .trust-strip,
+      .work-grid,
+      .plans-grid,
+      .service-mini-grid,
+      .founders-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 560px;
+        place-items: start center;
+      }
+
+      .code-window {
+        min-height: 470px;
+      }
+
+      .floating-card {
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
+        width: 100%;
+        margin-top: 12px;
+      }
+
+      .floating-card.one,
+      .floating-card.two {
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
+      }
+
+      .founder-card {
+        grid-template-columns: 64px 1fr;
+      }
+
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="navbar">
+      <a class="brand" href="#home" aria-label="Prisma Embedded Codes home">
+        <span class="logo-tile" aria-hidden="true">
+          <svg class="logo-mark" viewBox="0 0 90 90" role="img">
+            <polygon points="18,58 47,12 47,73" fill="#7d3ff2" />
+            <polygon points="47,12 75,58 47,73" fill="#a65cff" />
+            <polygon points="18,58 47,73 47,45" fill="#2cc7ff" />
+            <polygon points="47,45 75,58 47,73" fill="#11a8f7" />
+            <path d="M66 36 L86 32" stroke="#ff2f91" stroke-width="7" stroke-linecap="round" />
+            <path d="M68 48 L88 48" stroke="#ffd400" stroke-width="7" stroke-linecap="round" />
+            <path d="M66 60 L86 64" stroke="#28b8ff" stroke-width="7" stroke-linecap="round" />
+            <path d="M81 32 L88 31" stroke="#18dcc4" stroke-width="5" stroke-linecap="round" />
+            <path d="M79 60 L88 62" stroke="#18dcc4" stroke-width="5" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span>Prisma Embedded Codes</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#home">Home</a>
+        <a href="#plans">Plans</a>
+        <a href="#contact">Info</a>
+      </nav>
+
+      <a class="nav-cta" href="https://forms.google.com" target="_blank" rel="noopener">
+        Start Project
+      </a>
+    </header>
+
+    <main>
+      <section id="home" class="page-section hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot"></span> Freelance web, software, and AI builds on demand</p>
+          <h1>Build Your Business With <span class="gradient-text">Prisma</span></h1>
+          <p class="lead">
+            Prisma Embedded Codes creates modern websites, business portals, chatbots, and AI-driven digital tools for founders, shops, local brands, and growing teams. Bring the idea; we shape the frontend, backend, automation, and launch path around your needs.
+          </p>
+
+          <div class="button-row">
+            <a class="primary-btn" href="https://forms.google.com" target="_blank" rel="noopener">
+              Request a Website
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <a class="secondary-btn" href="https://prisma02.vercel.app/" target="_blank" rel="noopener">
+              Main Website
+            </a>
+            <a class="ghost-btn" href="#plans">View Plans</a>
+          </div>
+
+          <div class="trust-strip" aria-label="Work highlights">
+            <div class="trust-item">
+              <strong>Business Websites</strong>
+              <span>Clean pages for services, stores, coaching, portfolios, and local brands.</span>
+            </div>
+            <div class="trust-item">
+              <strong>On Demand Builds</strong>
+              <span>Custom dashboards, forms, booking flows, and useful software tools.</span>
+            </div>
+            <div class="trust-item">
+              <strong>AI Automation</strong>
+              <span>Smart chatbots and AI features for WhatsApp, Instagram, and websites.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Prisma development preview">
+          <div class="code-window">
+            <div class="window-top">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="file-name">freelance-portal.html</span>
+            </div>
+            <div class="code-body">
+              <div><span class="code-comment">// Welcome to Prisma Embedded Codes</span></div>
+              <div><span class="code-keyword">const</span> project = <span class="code-string">"business website"</span>;</div>
+              <div><span class="code-keyword">const</span> services = [<span class="code-string">"frontend"</span>, <span class="code-string">"domain"</span>, <span class="code-string">"chatbot"</span>];</div>
+              <div><span class="code-keyword">build</span>({ fast: true, responsive: true, premium: true });</div>
+              <div><span class="code-comment">// Launch with support, polish, and clear pricing</span></div>
+            </div>
+          </div>
+
+          <div class="floating-card one">
+            <span class="mini-icon cyan" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <path d="M6 12l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <div>
+              <strong>Responsive UI</strong>
+              <span>Phone, tablet, desktop</span>
+            </div>
+          </div>
+
+          <div class="floating-card two">
+            <span class="mini-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <path d="M13 2L4 14h7l-1 8 10-13h-7l0-7z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <div>
+              <strong>Fast Delivery</strong>
+              <span>Launch-ready structure</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <div class="section-head">
+          <h2>What We Do</h2>
+          <p>We help businesses move from idea to online presence with sharp UI, practical features, and clear project paths.</p>
+        </div>
+
+        <div class="work-grid">
+          <article class="work-card">
+            <span class="icon-box" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24">
+                <path d="M4 5h16v11H4zM8 20h8M10 16v4M14 16v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <h3>Frontend Websites</h3>
+            <p>Landing pages, company websites, portfolios, and service pages with polished responsive layouts.</p>
+          </article>
+
+          <article class="work-card">
+            <span class="icon-box" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24">
+                <path d="M5 5h14v14H5zM9 9h6M9 13h6M9 17h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <h3>Business Portals</h3>
+            <p>Custom pages, forms, dashboards, booking sections, and software screens for everyday operations.</p>
+          </article>
+
+          <article class="work-card">
+            <span class="icon-box" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24">
+                <path d="M12 3v4M12 17v4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M3 12h4M17 12h4M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </span>
+            <h3>AI Driven Sites</h3>
+            <p>AI-assisted flows, recommendation blocks, smart FAQ assistants, and automations for better customer support.</p>
+          </article>
+
+          <article class="work-card">
+            <span class="icon-box" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24">
+                <path d="M7 8h10M7 12h6M12 20l-4-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <h3>Social Chatbots</h3>
+            <p>WhatsApp, Instagram, and website chatbots for business messages, leads, and quick replies.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="plans" class="page-section plans-section">
+        <div class="section-head">
+          <h2>Plans & Services</h2>
+          <p>Simple pricing for common project types. Each plan can be adjusted based on pages, features, integrations, and delivery scope.</p>
+        </div>
+
+        <div class="plans-grid">
+          <article class="plan-card">
+            <h3>Simple Frontend</h3>
+            <div class="price">&#8377;3,000 <span>without domain</span></div>
+            <p>Best for a basic online presence or starter business page.</p>
+            <ul class="plan-list">
+              <li><span class="check">&check;</span><span>Responsive HTML, CSS, and JS frontend</span></li>
+              <li><span class="check">&check;</span><span>Clean sections for brand, services, and contact</span></li>
+              <li><span class="check">&check;</span><span>No domain name included</span></li>
+            </ul>
+          </article>
+
+          <article class="plan-card featured">
+            <h3>Website + Domain + Chatbot</h3>
+            <div class="price">&#8377;5,000 <span>chatbot free</span></div>
+            <p>A stronger launch package for businesses that want online reach and quick customer replies.</p>
+            <ul class="plan-list">
+              <li><span class="check">&check;</span><span>Frontend website with domain setup</span></li>
+              <li><span class="check">&check;</span><span>Basic chatbot included free</span></li>
+              <li><span class="check">&check;</span><span>Business-ready contact and lead flow</span></li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <h3>Software Tool</h3>
+            <div class="price">&#8377;3,000 <span>starting</span></div>
+            <p>Small custom software screens for a specific business workflow.</p>
+            <ul class="plan-list">
+              <li><span class="check">&check;</span><span>Dashboard, calculator, tracker, or form tool</span></li>
+              <li><span class="check">&check;</span><span>Frontend interface with useful interactions</span></li>
+              <li><span class="check">&check;</span><span>Scope-based feature planning</span></li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <h3>Full Stack Website</h3>
+            <div class="price">&#8377;10,000 <span>with domain</span></div>
+            <p>For businesses that need frontend, backend, data flow, and domain launch.</p>
+            <ul class="plan-list">
+              <li><span class="check">&check;</span><span>Full website structure with backend support</span></li>
+              <li><span class="check">&check;</span><span>Domain name included</span></li>
+              <li><span class="check">&check;</span><span>Forms, data handling, and admin-ready flow</span></li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <h3>AI Driven Website</h3>
+            <div class="price">&#8377;15,000 <span>advanced</span></div>
+            <p>Premium site experience with AI features, automation, or smart assistance.</p>
+            <ul class="plan-list">
+              <li><span class="check">&check;</span><span>AI powered site sections or assistants</span></li>
+              <li><span class="check">&check;</span><span>Modern UI with custom business logic</span></li>
+              <li><span class="check">&check;</span><span>Designed for high-value brand presence</span></li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <h3>Business Chatbot</h3>
+            <div class="price">&#8377;7,000 <span>WhatsApp / Insta</span></div>
+            <p>Automated replies and lead support for social channels and websites.</p>
+            <ul class="plan-list">
+              <li><span class="check">&check;</span><span>WhatsApp, Instagram, or website chatbot</span></li>
+              <li><span class="check">&check;</span><span>FAQ, lead capture, and business reply flow</span></li>
+              <li><span class="check">&check;</span><span>Built around your service details</span></li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="services-band">
+          <div class="service-intro">
+            <h3>Services Built Around Business Needs</h3>
+            <p>We plan the structure, build the interface, polish the experience, and prepare the project so it feels ready for real customers.</p>
+            <a class="primary-btn" href="https://forms.google.com" target="_blank" rel="noopener">Book a Project Call</a>
+          </div>
+
+          <div class="service-mini-grid">
+            <article class="service-card">
+              <h3>Brand Pages</h3>
+              <p>Home, about, services, pricing, testimonials, and contact sections.</p>
+            </article>
+            <article class="service-card">
+              <h3>Lead Systems</h3>
+              <p>Google Form links, enquiry buttons, call links, and WhatsApp-ready actions.</p>
+            </article>
+            <article class="service-card">
+              <h3>Launch Support</h3>
+              <p>Domain guidance, deployment planning, and responsive testing.</p>
+            </article>
+            <article class="service-card">
+              <h3>Custom UI</h3>
+              <p>Advanced layouts, smooth details, clear sections, and business-focused polish.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="page-section contact-section">
+        <div class="section-head">
+          <h2>Our Info</h2>
+          <p>Talk to the founders and start your business website, software, or chatbot project. No email details are shown here for now.</p>
+        </div>
+
+        <div class="contact-layout">
+          <div class="founders-grid">
+            <article class="founder-card">
+              <span class="icon-box" aria-hidden="true">
+                <svg width="30" height="30" viewBox="0 0 24 24">
+                  <path d="M5 19h14M7 19l1-10 4 5 4-5 1 10M8 9L6 5M16 9l2-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <div>
+                <h3>Rishabh Parashari</h3>
+                <div class="role">Founder</div>
+                <a class="phone-line" href="tel:+919990543229">Call 99905 43229</a>
+              </div>
+            </article>
+
+            <article class="founder-card">
+              <span class="icon-box" aria-hidden="true">
+                <svg width="30" height="30" viewBox="0 0 24 24">
+                  <path d="M6 17c7-1 10-4 12-11-7 2-10 5-11 12M6 17l-3 3M10 14l-2-2M14 10l-2-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <div>
+                <h3>Harshit Mishra</h3>
+                <div class="role">Founder</div>
+                <a class="phone-line" href="tel:+919410823199">Call 94108 23199</a>
+              </div>
+            </article>
+
+            <article class="founder-card">
+              <span class="icon-box" aria-hidden="true">
+                <svg width="30" height="30" viewBox="0 0 24 24">
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M18 9h3M3 15h3M18 15h3M7 7h10v10H7zM10 10h4v4h-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <div>
+                <h3>Aastik Mishra</h3>
+                <div class="role">Founder</div>
+                <a class="phone-line" href="tel:+917417845421">Call 74178 45421</a>
+              </div>
+            </article>
+
+            <article class="founder-card">
+              <span class="icon-box" aria-hidden="true">
+                <svg width="30" height="30" viewBox="0 0 24 24">
+                  <path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <div>
+                <h3>Devansh Singh</h3>
+                <div class="role">Founder</div>
+                <a class="phone-line" href="tel:+918279837701">Call 82798 37701</a>
+              </div>
+            </article>
+          </div>
+
+          <aside class="contact-panel">
+            <h3>Ready to Start?</h3>
+            <p>Share your business idea, preferred plan, and any features you need. The Google Form button is already placed as a link so you can replace it later with your final form URL.</p>
+            <div class="contact-actions">
+              <a class="primary-btn" href="https://forms.google.com" target="_blank" rel="noopener">Open Project Form</a>
+              <a class="secondary-btn" href="https://prisma02.vercel.app/" target="_blank" rel="noopener">Visit Main Website</a>
+              <a class="ghost-btn" href="#home">Back to Home</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>&copy; 2026 Prisma Embedded Codes. Built for freelance web, software, and AI services.</span>
+      <a class="footer-link" href="https://prisma02.vercel.app/" target="_blank" rel="noopener">prisma02.vercel.app</a>
+    </footer>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = [...navLinks]
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const markActive = () => {
+      const position = window.scrollY + 140;
+      let activeId = 'home';
+
+      sections.forEach((section) => {
+        if (section.offsetTop <= position) activeId = section.id;
+      });
+
+      navLinks.forEach((link) => {
+        const active = link.getAttribute('href') === `#${activeId}`;
+        link.style.color = active ? 'var(--purple)' : '';
+        link.style.fontWeight = active ? '900' : '';
+      });
+    };
+
+    window.addEventListener('scroll', markActive, { passive: true });
+    markActive();
+  </script>
+</body>
+</html>
