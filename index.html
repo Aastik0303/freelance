@@ -50,7 +50,10 @@
 
     * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 92px;
+    }
 
     body {
       margin: 0;
@@ -356,9 +359,10 @@
 
     h1 {
       margin-bottom: 22px;
-      max-width: 780px;
-      font-size: clamp(3.1rem, 7vw, 6.65rem);
-      line-height: 0.94;
+      max-width: 850px;
+      font-size: clamp(3rem, 6.4vw, 6.1rem);
+      line-height: 0.98;
+      text-wrap: balance;
     }
 
     .gradient-text {
@@ -368,7 +372,7 @@
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: gradient-slide 7s ease-in-out infinite;
+      animation: gradient-slide 12s ease-in-out infinite;
     }
 
     @keyframes gradient-slide {
@@ -1760,7 +1764,7 @@
 
         <div class="hero-copy">
           <p class="eyebrow"><span class="status-dot"></span> Freelance web, software, and AI builds on demand</p>
-          <h1>Build Your Business With <span class="gradient-text">Prisma embedded codes</span></h1>
+          <h1>Build Your Business With <span class="gradient-text">Smart Websites</span></h1>
           <p class="lead">
             Prisma Embedded Codes creates modern websites, business portals, chatbots, and AI-driven digital tools for founders, shops, local brands, and growing teams. Bring the idea; we shape the frontend, backend, automation, and launch path around your needs.
           </p>
@@ -2369,6 +2373,18 @@
         window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
       });
 
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var target = document.querySelector(link.getAttribute('href'));
+          if (!target) return;
+          e.preventDefault();
+          var navHeight = navbar ? navbar.offsetHeight + 18 : 92;
+          var top = target.getBoundingClientRect().top + window.scrollY - navHeight;
+          window.scrollTo({ top: top, behavior: reducedMotion ? 'auto' : 'smooth' });
+          history.pushState(null, '', link.getAttribute('href'));
+        });
+      });
+
       /* ============ active nav link ============ */
       var navLinks = document.querySelectorAll('.nav-links a');
       var sections = Array.prototype.map.call(navLinks, function (l) {
@@ -2544,14 +2560,14 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        for (var i = 0; i < 46; i++) {
+        for (var i = 0; i < 34; i++) {
           particles.push({
             x: Math.random(), y: Math.random(),
             r: 1 + Math.random() * 2.4,
-            vx: (Math.random() - 0.5) * 0.0006,
-            vy: (Math.random() - 0.5) * 0.0006,
+            vx: (Math.random() - 0.5) * 0.00035,
+            vy: (Math.random() - 0.5) * 0.00035,
             c: COLORS[i % COLORS.length],
-            a: 0.25 + Math.random() * 0.4
+            a: 0.18 + Math.random() * 0.32
           });
         }
 
@@ -2572,11 +2588,11 @@
               var dx = (particles[a].x - particles[b].x) * canvas.width;
               var dy = (particles[a].y - particles[b].y) * canvas.height;
               var dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist < 110) {
+              if (dist < 96) {
                 ctx.beginPath();
                 ctx.moveTo(particles[a].x * canvas.width, particles[a].y * canvas.height);
                 ctx.lineTo(particles[b].x * canvas.width, particles[b].y * canvas.height);
-                ctx.strokeStyle = 'rgba(85,55,255,' + (0.1 * (1 - dist / 110)) + ')';
+                ctx.strokeStyle = 'rgba(85,55,255,' + (0.075 * (1 - dist / 96)) + ')';
                 ctx.lineWidth = 1;
                 ctx.stroke();
               }
